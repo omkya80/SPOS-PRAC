@@ -1,0 +1,72 @@
+package Assembler;
+
+import java.io.*;
+import java.util.*;
+
+
+public class Pass1 {
+	 public static void main(String[] args) throws IOException {
+
+	        String[] code = {
+	            "MACRO",
+	            "INCR &ARG1",
+	            "A 1,&ARG1",
+	            "MEND",
+	            "START 101",
+	            "INCR TERM",
+	            "MOVEM AREG,TERM",
+	            "END"
+	        };
+
+	        List<String[]> MNT = new ArrayList<>();
+	        List<String> MDT = new ArrayList<>();
+
+	        BufferedWriter inter = new BufferedWriter(new FileWriter("intermediate.txt"));
+	        BufferedWriter mnt = new BufferedWriter(new FileWriter("MNT.txt"));
+	        BufferedWriter mdt = new BufferedWriter(new FileWriter("MDT.txt"));
+
+	        boolean macro = false;
+	        int mdtIndex = 0;
+
+	        for (int i = 0; i < code.length; i++) {
+
+	            String line = code[i].trim();
+	            String[] p = line.split(" ");
+
+	            if (p[0].equals("MACRO")) {
+	                macro = true;
+
+	                String[] def = code[++i].trim().split(" ");
+	                MNT.add(new String[]{ def[0], String.valueOf(mdtIndex) });
+	                continue;
+	            }
+
+	            if (p[0].equals("MEND")) {
+	                MDT.add("MEND");
+	                mdtIndex++;
+	                macro = false;
+	                continue;
+	            }
+
+	            if (macro) {
+	                MDT.add(line);
+	                mdtIndex++;
+	            } else {
+	                inter.write(line + "\n");
+	            }
+	        }
+
+	        for (String[] m : MNT)
+	            mnt.write(m[0] + "\t" + m[1] + "\n");
+
+	        for (int i = 0; i < MDT.size(); i++)
+	            mdt.write(i + "\t" + MDT.get(i) + "\n");
+
+	        inter.close();
+	        mnt.close();
+	        mdt.close();
+
+	        System.out.println("Pass-I complete. MNT, MDT & Intermediate Code generated in storage..");
+	    }
+
+}

@@ -1,0 +1,57 @@
+package Assembler;
+import java.io.*;
+import java.util.*;
+
+public class Pass2Algo {
+	 public static void main(String[] args) throws IOException {
+
+	        BufferedReader inter = new BufferedReader(new FileReader("intermediate.txt"));
+	        BufferedReader sym = new BufferedReader(new FileReader("symtab.txt"));
+	        BufferedWriter out = new BufferedWriter(new FileWriter("target.txt"));
+
+	        Map<String, String> symtab = new HashMap<>();
+	        String line;
+
+	        // Load Symbol Table
+	        while ((line = sym.readLine()) != null) {
+	            String[] p = line.split("\t");
+	            symtab.put(p[0], p[1]);
+	        }
+
+	        // Instruction and Register Lists
+	        List<String> inst = Arrays.asList("ADD", "SUB", "MOVER", "MOVEM", "COMP", "BC", "DIV", "READ", "PRINT");
+	        List<String> reg = Arrays.asList("AREG", "BREG", "CREG", "DREG");
+
+	        while ((line = inter.readLine()) != null) {
+
+	            String[] p = line.split("\t");
+	            String lc = p[0], op = p[1];
+	            String opd = p.length > 2 ? p[2] : "";
+
+	            if (op.equals("START") || op.equals("END") || op.equals("DS"))
+	                continue;
+
+	            if (op.equals("DC")) {
+	                out.write(lc + "\t" + opd + "\n");
+	                continue;
+	            }
+
+	            int opVal = inst.indexOf(op) + 1;
+
+	            String r = opd.contains(",") ? opd.split(",")[0] : "";
+	            String symName = opd.contains(",") ? opd.split(",")[1] : opd;
+
+	            int rVal = reg.indexOf(r) + 1;
+	            String addr = symtab.getOrDefault(symName, "000");
+
+	            out.write(lc + "\t" + String.format("%02d", opVal) + "\t" + rVal + "\t" + addr + "\n");
+	        }
+
+	        inter.close();
+	        sym.close();
+	        out.close();
+
+	        System.out.println("Pass-II complete. Target code generated in target.txt");
+	    }
+
+}

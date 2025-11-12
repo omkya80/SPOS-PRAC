@@ -1,0 +1,60 @@
+package Assembler;
+import java.io.*;
+public class Pass1Algo {
+	
+	    public static void main(String[] args) throws IOException {
+
+	        String[][] code = {
+	            {"", "START", "100"},
+	            {"LOOP", "MOVER", "AREG,DATA"},
+	            {"", "ADD", "AREG,ONE"},
+	            {"", "MOVEM", "AREG,RESULT"},
+	            {"", "END", ""}
+	        };
+
+	        int lc = 0;
+	        String[][] symtab = new String[10][2];
+	        int s = 0;
+
+	        BufferedWriter ic = new BufferedWriter(new FileWriter("intermediate.txt"));
+	        BufferedWriter st = new BufferedWriter(new FileWriter("symtab.txt"));
+
+	        for (String[] line : code) {
+
+	            String label = line[0];
+	            String op = line[1];
+	            String opd = line[2];
+
+	            if (op.equals("START")) {
+	                lc = Integer.parseInt(opd);
+	                ic.write(lc + "\t" + op + "\t" + opd + "\n");
+	                continue;
+	            }
+
+	            if (!label.isEmpty()) {
+	                symtab[s][0] = label;
+	                symtab[s][1] = String.valueOf(lc);
+	                s++;
+	            }
+
+	            ic.write(lc + "\t" + op + "\t" + opd + "\n");
+
+	            if (op.equals("DS"))
+	                lc += Integer.parseInt(opd);
+	            else if (op.equals("DC"))
+	                lc += 1;
+	            else if (!op.equals("END"))
+	                lc += 1;
+	        }
+
+	        for (int i = 0; i < s; i++)
+	            st.write(symtab[i][0] + "\t" + symtab[i][1] + "\n");
+
+	        ic.close();
+	        st.close();
+
+	        System.out.println("Pass-1 Completed.");
+	    }
+	}
+
+
