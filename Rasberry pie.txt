@@ -1,0 +1,9 @@
+Import RPI.GPIO as GPIO
+Import time
+GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(3,GPIO.OUT)
+while True:
+	GPIO.output(3,True)
+	time.sleep(1)
+	GPIO.output(3,false)
+	time.sleep(1)
