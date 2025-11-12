@@ -1,0 +1,141 @@
+
+SYSTEM PROGRAMMING & OPERATING SYSTEM (SPOS)
+--------------------------------------------
+ORAL QUESTION AND ANSWER SET
+
+===========================
+GROUP A
+===========================
+
+EXPERIMENT 1 – TWO PASS ASSEMBLER
+---------------------------------
+Q1. What is an assembler?
+A: An assembler converts an assembly language program (source code) into its equivalent machine code (object code).
+
+Q2. What are the two passes of a two-pass assembler?
+A: Pass 1 builds symbol, literal, and pool tables and generates intermediate code.
+   Pass 2 uses tables to generate final machine code.
+
+Q3. What are the main data structures used in an assembler?
+A: Symbol Table, Literal Table, Pool Table, Opcode Table.
+
+Q4. What is the difference between single-pass and two-pass assembler?
+A: Single-pass handles forward references with difficulty.
+   Two-pass easily resolves forward references by scanning the source twice.
+
+Q5. What are assembler directives?
+A: Instructions to the assembler, not machine instructions (e.g., START, END, EQU, ORIGIN, LTORG).
+
+Q6. What is the role of ORIGIN, EQU, and LTORG directives?
+A: ORIGIN sets the location counter.
+   EQU assigns a constant value to a symbol.
+   LTORG specifies where literals should be placed in memory.
+
+Q7. What is a symbol table?
+A: A data structure that stores symbol names and their corresponding memory addresses.
+
+Q8. What is intermediate code?
+A: Output of Pass-I, containing symbolic representations to be converted to machine code in Pass-II.
+
+---------------------------------------------------
+
+EXPERIMENT 2 – TWO PASS MACRO PROCESSOR
+---------------------------------------
+Q1. What is a macro?
+A: A macro is a single instruction that expands automatically into a set of instructions.
+
+Q2. What are the two passes of a macro processor?
+A: Pass 1 builds MNT (Macro Name Table), MDT (Macro Definition Table), and ALA (Argument List Array).
+   Pass 2 expands macros using these tables.
+
+Q3. What is the difference between Pass 1 and Pass 2 of a macro processor?
+A: Pass 1 defines macros and stores them in tables.
+   Pass 2 expands macro calls in the program.
+
+Q4. What is the use of the MNT and MDT tables?
+A: MNT stores macro names and pointers to definitions.
+   MDT stores actual macro definitions.
+
+Q5. What is a nested macro?
+A: A macro that calls another macro within its definition.
+
+Q6. What are AIF and AGO directives?
+A: AIF is a conditional macro branching instruction.
+   AGO is an unconditional macro branching instruction.
+
+Q7. What is the function of sequence symbols?
+A: They act as labels for branching inside macros.
+
+===========================
+GROUP B
+===========================
+
+EXPERIMENT 3 – CPU SCHEDULING ALGORITHMS
+----------------------------------------
+Q1. What is CPU scheduling?
+A: CPU scheduling determines which process runs at a given time in a multitasking OS.
+
+Q2. Name types of schedulers.
+A: Long-term scheduler, Medium-term scheduler, Short-term scheduler.
+
+Q3. What are the types of scheduling algorithms?
+A: FCFS, SJF, Priority, and Round Robin.
+
+Q4. What is the main goal of CPU scheduling?
+A: To maximize CPU utilization and throughput while minimizing waiting, turnaround, and response times.
+
+Q5. What is preemptive and non-preemptive scheduling?
+A: Preemptive – CPU can be taken away from a process.
+   Non-preemptive – Process runs till completion or blocking.
+
+Q6. Explain FCFS scheduling.
+A: Non-preemptive algorithm where processes are executed in the order they arrive.
+
+Q7. What is SJF scheduling?
+A: Selects process with shortest burst time first; minimizes waiting time.
+
+Q8. What is Round Robin scheduling?
+A: Each process gets equal CPU time (time quantum); fair and preemptive.
+
+Q9. What is Priority Scheduling?
+A: Process with highest priority executes first.
+
+Q10. What are performance metrics in scheduling?
+A: CPU utilization, Throughput, Turnaround time, Waiting time, Response time.
+
+---------------------------------------------------
+
+EXPERIMENT 4 – PAGE REPLACEMENT ALGORITHMS
+------------------------------------------
+Q1. What is paging?
+A: Paging divides memory into fixed-size blocks — pages (logical) and frames (physical).
+
+Q2. What is virtual memory?
+A: Allows a system to use disk space as an extension of RAM.
+
+Q3. What is a page fault?
+A: Occurs when a page needed by a process is not present in main memory.
+
+Q4. What are page replacement algorithms?
+A: Techniques used by OS to decide which page to remove from memory when a new page is needed.
+
+Q5. List common page replacement algorithms.
+A: FIFO, LRU, OPT.
+
+Q6. Explain FIFO page replacement.
+A: Replaces the oldest page in memory.
+
+Q7. Explain LRU page replacement.
+A: Replaces the page that hasn’t been used for the longest time.
+
+Q8. Explain OPT page replacement.
+A: Replaces the page that won’t be used for the longest time in future.
+
+Q9. What is a page hit?
+A: When the required page is already in memory.
+
+Q10. What is a page hit ratio?
+A: Hit Ratio = (Number of Hits) / (Total Number of References).
+
+Q11. What is Belady’s anomaly?
+A: In FIFO, increasing the number of frames can increase the number of page faults.
