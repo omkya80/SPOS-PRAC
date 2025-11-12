@@ -1,0 +1,56 @@
+package ALGO;
+import java.util.*;
+
+class ProcessFCFS {
+    int id, arrivalTime, burstTime, waitingTime, turnaroundTime, completionTime;
+
+    public ProcessFCFS(int id, int arrivalTime, int burstTime) {
+        this.id = id;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+    }
+
+    public static void main(String[] args) {  
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of processes: ");
+        int n = sc.nextInt();
+
+        ProcessFCFS[] processes = new ProcessFCFS[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter arrival time and burst time for process " + (i + 1) + ": ");
+            int at = sc.nextInt();
+            int bt = sc.nextInt();
+            processes[i] = new ProcessFCFS(i + 1, at, bt);
+        }
+
+        Arrays.sort(processes, Comparator.comparingInt(p -> p.arrivalTime));
+
+        int currentTime = 0;
+        for (ProcessFCFS p : processes) {
+            if (currentTime < p.arrivalTime)
+                currentTime = p.arrivalTime;
+            p.waitingTime = currentTime - p.arrivalTime;
+            currentTime += p.burstTime;
+            p.turnaroundTime = p.waitingTime + p.burstTime;
+            p.completionTime = currentTime;
+        }
+
+        double totalWT = 0, totalTAT = 0;
+        System.out.println("\nFCFS Scheduling Results:");
+        System.out.println("ID\tAT\tBT\tCT\tTAT\tWT");
+
+        for (ProcessFCFS p : processes) {
+            System.out.println(p.id + "\t" + p.arrivalTime + "\t" + p.burstTime + "\t" + 
+                               p.completionTime + "\t" + p.turnaroundTime + "\t" + p.waitingTime);
+            totalWT += p.waitingTime;
+            totalTAT += p.turnaroundTime;
+        }
+
+        System.out.println("Average Waiting Time: " + (totalWT / n));
+        System.out.println("Average Turnaround Time: " + (totalTAT / n));
+
+        sc.close();
+    }
+}
